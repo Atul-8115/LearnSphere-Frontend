@@ -12,7 +12,7 @@ const ProfileDropDown = () => {
      <div>
        <img
          src= {`profile-${user?.firstName}`}
-
+         
        />
      </div>
    </button>

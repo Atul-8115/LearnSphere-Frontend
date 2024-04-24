@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, matchPath, useLocation } from 'react-router-dom'
 import logo from '../../assets/Logo/LearnSphere.png'
 import {NavbarLinks} from '../../data/navbar-links'
@@ -7,7 +7,7 @@ import { CiShoppingCart } from "react-icons/ci"
 import ProfileDropDown from '../core/Auth/ProfileDropDown'
 import { apiConnector } from '../../services/apiconnector'
 import { categories } from '../../services/apis'
-import { IoIosArrowDown, IoIosArrowDropdown } from 'react-icons/io'
+import { IoIosArrowDropdown } from 'react-icons/io'
 
 const subLinks = [
   {
@@ -22,6 +22,7 @@ const subLinks = [
 
 
 const Navbar = () => {
+    console.log("Printing base url: ")
     const {token} = useSelector((state) => state.auth)
     const {user} = useSelector((state) => state.profile)
     const {totalItems} = useSelector((state) => state.cart)
@@ -30,26 +31,29 @@ const Navbar = () => {
 
     const [ssubLinks, setSubLinks] = useState([])
 
-    const fetchSublinks = async() => {
-      try {
-          const result = await apiConnector("GET", categories.CATEGORIES_API)
-          console.log("Printing sublinks result: ",result)
-          setSubLinks(result?.data?.data)
-      } catch (error) {
-          console.log("Could not fetch the category list",error.message);
-      }
-   }
+  //   const fetchSublinks = async() => {
+  //     try {
+  //         const result = await apiConnector("GET", categories.CATEGORIES_API)
+  //         console.log("Printing sublinks result: ",result)
+  //         setSubLinks(result?.data?.data)
+  //     } catch (error) {
+  //         console.log("Could not fetch the category list",error.message);
+  //     }
+  //  }
     useEffect( () => {
       // fetchSublinks();
     },[])
 
+
     const matchRoute = (route) => {
         return matchPath({path:route}, location.pathname)
     }
+
+
   return (
     <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700'>
       <div className='flex w-11/12 max-w-maxContent items-center justify-between'>
-        <Link>
+        <Link to="/">
             <img
                 src={logo}
                 width={160}

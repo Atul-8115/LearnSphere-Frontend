@@ -7,9 +7,12 @@ import {Provider} from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import rootReducer from './reducer'
 import { Toaster } from 'react-hot-toast'
+
+// Setup for using redux toolkit
 const store = configureStore({
   reducer:rootReducer,
 })
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
