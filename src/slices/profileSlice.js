@@ -9,7 +9,7 @@ const profileSlice = createSlice({
     initialState: initialState,
     reducers: ({
         setUser(state, value) {
-            state.token = value.payload
+            state.accessToken = value.payload
         }
     })
 })

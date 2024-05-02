@@ -4,6 +4,7 @@ import { authEndpoints } from "../apis"
 import { setLoading, setToken } from '../../slices/authSlice'
 import { apiConnector } from '../apiconnector'
 import { setUser } from '../../slices/profileSlice'
+import { resetCart } from '../../slices/cartSlice'
 
 
 const {
@@ -42,28 +43,31 @@ export function sendOtp(email, navigate) {
 }
 
 export function login(email, password, navigate) {
+
   return async (dispatch) => {
+
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
+
     try {
       const response = await apiConnector("POST", LOGIN_API, {
         email,
         password,
       })
 
-      console.log("LOGIN API RESPONSE............", response)
-
+      console.log("PRINTING RESPONSE ",response.data.data.user.image)
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
 
       toast.success("Login Successful")
-      dispatch(setToken(response.data.token))
-      const userImage = response.data?.user?.image
-        ? response.data.user.image
-        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
-      dispatch(setUser({ ...response.data.user, image: userImage }))
-      localStorage.setItem("token", JSON.stringify(response.data.token))
+      dispatch(setToken(response.data.accessToken))
+      const userImage = response.data?.data?.user?.image
+        ? response.data.data.user.image
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.data.user.firstName} ${response.data.data.user.lastName}`
+      dispatch(setUser({ ...response.data.data.user, image: userImage }))
+
+      localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken))
       navigate("/dashboard/my-profile")
     } catch (error) {
       console.log("LOGIN API ERROR............", error)
@@ -73,7 +77,6 @@ export function login(email, password, navigate) {
     toast.dismiss(toastId)
   }
 }
-
 
 export function signup(
     accountType,
@@ -115,3 +118,15 @@ export function signup(
       toast.dismiss(toastId)
     }
   }
+
+export function logout(navigate) {
+  return (dispatch) => {
+    dispatch(setToken(null))
+    dispatch(setUser(null))
+    dispatch(resetCart())
+    localStorage.removeItem("token")
+    localStorage.removeItem('user')
+    toast.success("Logged Out")
+    navigate("/")
+  }
+}
