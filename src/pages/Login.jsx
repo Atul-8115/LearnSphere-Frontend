@@ -2,6 +2,7 @@ import React from 'react'
 import loginImg from "../assets/Images/login.webp"
 import Template from '../components/core/Auth/Template'
 const Login = () => {
+  // console.log("I am in Login file")
   return (
     <Template
       title="Welcome Back"

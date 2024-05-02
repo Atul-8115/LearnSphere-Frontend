@@ -5,12 +5,13 @@ import LoginForm from './LoginForm'
 import frameImg from '../../../assets/Images/frame.png'
 
 const Template = ({ title, description1, description2, image, formType }) => {
-    const { loading } = useSelector(state => state.auth)
+    const { loading } = useSelector((state) => state.auth)
+    // console.log("I am in template file -> ")
 
   return (
     <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
       {loading ? (
-        <div className='spinner'></div>
+        <div className='spinner'>loading</div>
       ) : (
         <div className="mx-auto flex w-11/12 max-w-maxContent flex-col-reverse justify-between gap-y-12 py-12 md:flex-row md:gap-y-0 md:gap-x-12">
             <div className="mx-auto w-11/12 max-w-[450px] md:mx-0">

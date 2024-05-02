@@ -9,6 +9,7 @@ import { logout } from "../../../services/operations/authApi"
 
 export default function ProfileDropdown() {
   const { user } = useSelector((state) => state.profile)
+  // console.log("Printing user in Profiledropdown file -> ",user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
@@ -16,7 +17,7 @@ export default function ProfileDropdown() {
 
   useOnClickOutside(ref, () => setOpen(false))
 
-  if (!user) return null
+  // if (!user) return null
 
   return (
     <button className="relative" onClick={() => setOpen(true)}>
@@ -48,7 +49,7 @@ export default function ProfileDropdown() {
             className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
           >
             <VscSignOut className="text-lg" />
-            Logout
+               Logout
           </div>
         </div>
       )}

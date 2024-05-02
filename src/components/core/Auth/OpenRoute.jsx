@@ -1,15 +1,16 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router'
+// This will prevent authenticated users from accessing this route
+import { useSelector } from "react-redux"
+import { Navigate } from "react-router-dom"
 
-const OpenRoute = ({ children }) => {
-    const { token } = useSelector((state) => state.auth)
+function OpenRoute({ children }) {
+  const { refreshToken } = useSelector((state) => state.auth)
 
-    if (token === null) {
-        return children
-    } else {
-        return <Navigate to='/dahsboard/my-profile' />
-    }
+  console.log("Printing refresh token ", refreshToken)
+  if (refreshToken === null) {
+    return children
+  } else {
+    return <Navigate to="/dashboard/my-profile" />
+  }
 }
 
 export default OpenRoute
