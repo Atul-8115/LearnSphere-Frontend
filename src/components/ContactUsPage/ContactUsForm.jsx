@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import CountryCode from "../../data/countrycode.json"
 import { apiConnector } from "../../services/apiconnector"
 import { contactusEndpoint } from "../../services/apis"
+import toast from "react-hot-toast"
 
 const ContactUsForm = () => {
   const [loading, setLoading] = useState(false)
@@ -24,9 +25,11 @@ const ContactUsForm = () => {
         data
       )
       console.log("Email Res - ", res)
+      toast.success("Check your email")
       setLoading(false)
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message)
+      toast.error("Something went wrong")
       setLoading(false)
     }
   }
@@ -58,7 +61,10 @@ const ContactUsForm = () => {
             name="firstname"
             id="firstname"
             placeholder="Enter first name"
-            className="form-style"
+            style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+            className="form-style w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
             {...register("firstname", { required: true })}
           />
           {errors.firstname && (
@@ -76,7 +82,10 @@ const ContactUsForm = () => {
             name="lastname"
             id="lastname"
             placeholder="Enter last name"
-            className="form-style"
+            style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+            className="form-style w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
             {...register("lastname")}
           />
         </div>
@@ -91,7 +100,10 @@ const ContactUsForm = () => {
           name="email"
           id="email"
           placeholder="Enter email address"
-          className="form-style"
+          style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+            className="form-style w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
           {...register("email", { required: true })}
         />
         {errors.email && (
@@ -113,7 +125,10 @@ const ContactUsForm = () => {
               name="firstname"
               id="firstname"
               placeholder="Enter first name"
-              className="form-style"
+              style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+              }}
+              className="form-style rounded-[0.5rem] p-[12px] pr-5 bg-richblack-800"
               {...register("countrycode", { required: true })}
             >
               {CountryCode.map((ele, i) => {
@@ -131,7 +146,10 @@ const ContactUsForm = () => {
               name="phonenumber"
               id="phonenumber"
               placeholder="12345 67890"
-              className="form-style"
+              style={{
+                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+              }}
+              className="form-style w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
               {...register("phoneNo", {
                 required: {
                   value: true,
@@ -160,7 +178,10 @@ const ContactUsForm = () => {
           cols="30"
           rows="7"
           placeholder="Enter your message here"
-          className="form-style"
+          style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+          className="form-style w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
           {...register("message", { required: true })}
         />
         {errors.message && (
