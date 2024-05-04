@@ -8,6 +8,8 @@ import FoundingStory from "../assets/Images/FoundingStory.png"
 import Quote from '../components/core/AboutUsPage/Quote'
 import StatsComponents from '../components/core/AboutUsPage/StatsComponent'
 import LearningGrid from '../components/core/AboutUsPage/LearningGrid'
+import ContactFormSection from '../components/core/AboutUsPage/ContactFormSection'
+import Footer from '../components/common/Footer'
 const About = () => {
   return (
     <div className='mx-auto mt-[100px] text-white'>
@@ -15,14 +17,14 @@ const About = () => {
       <section>
         <div>
             <header>
-                Driving Innovation in Online Education for a
+                Driving Innovation in Online Education for a 
                 <HighlightText text={"Brighter Future"}/>
                 <p>LearnSphere is at the forefront of driving innovation in online education. We're passionate about creating a brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing a vibrant learning community.</p>
             </header>
             <div className='flex gap-x-3 mx-auto'>
-                <img src={BannerImage1}/>
-                <img src={BannerImage2}/>
-                <img src={BannerImage3}/>
+                <img src={BannerImage1} />
+                <img src={BannerImage2} />
+                <img src={BannerImage3} />
             </div>
         </div>
       </section>
@@ -34,6 +36,7 @@ const About = () => {
             <Quote/>
         </div>
       </section>
+
 
       {/* section 3 */}
 
@@ -75,12 +78,23 @@ const About = () => {
       </section>  
 
       {/* section 4 */}
-      <StatsComponents/>
-
+      <StatsComponents/>  
+      
       {/* section 5 */}
-      <section>
-        <LearningGrid/>
+      <section className='mx-auto flex flex-col items-center justify-between gap-5 mb-[140px]'>
+        <LearningGrid />
+        <ContactFormSection />
       </section>
+
+      <section>
+        <div>
+            Reviews from other learners
+            {/* <ReviewSlider /> */}
+        </div>
+      </section>
+
+      <Footer/>
+
     </div>
   )
 }
