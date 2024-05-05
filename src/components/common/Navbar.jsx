@@ -36,20 +36,19 @@ const Navbar = () => {
     const fetchSublinks = async() => {
         try{
             const result = await apiConnector("GET", categories.CATEGORIES_API);
-            // console.log("Printing Sublinks result:" , result);
+            console.log("Printing Sublinks result:" , result);
             setSsubLinks(result.data.data);
         }
         catch(error) {
-            console.log("Could not fetch the category list");
+            console.log("Could not fetch the category list",error.message);
         }
     }
-
 
     useEffect( () => {
         fetchSublinks();
     },[] )
 
-
+    console.log("Printing sublinks -> ",ssubLinks)
 
     const matchRoute = (route) => {
         return matchPath({path:route}, location.pathname);
@@ -88,10 +87,10 @@ const Navbar = () => {
                                 </div>
 
                                 {
-                                    subLinks.length ? (
-                                            subLinks.map( (subLink, index) => (
-                                                <Link to={`${subLink.link}`} key={index}>
-                                                    <p>{subLink.title}</p>
+                                    ssubLinks.length ? (
+                                        ssubLinks.map( (subLink, index) => (
+                                                <Link to='/' key={index}>
+                                                    <p>{subLink.name}</p>
                                                 </Link>
                                             ) )
                                     ) : (<div></div>)
@@ -125,7 +124,7 @@ const Navbar = () => {
             {
                 user && user?.accountType != "Instructor" && (
                     <Link to="/dashboard/cart" className='relative'>
-                        <AiOutlineShoppingCart />
+                        <AiOutlineShoppingCart size={24} fill="#AFB2BF"/>
                         {
                             totalItems > 0 && (
                                 <span>

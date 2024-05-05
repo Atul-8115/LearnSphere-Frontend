@@ -10,6 +10,8 @@ import ForgotPassword from './pages/ForgotPassword'
 import UpdatePassword from './pages/UpdatePassword'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import Dashboard from './pages/Dashboard'
+import PrivateRoute from './components/core/Auth/PrivateRoute'
 function App() {
 
   return (
@@ -59,15 +61,20 @@ function App() {
         />
         <Route
           path='about'
-          element = {
-            <OpenRoute>
-              <About/>
-            </OpenRoute>
-          }
+          element = {<About/>}
         />
         <Route
           path='/contact'
           element={<Contact/>}
+        />
+
+        <Route
+          path='dashboard/my-profile'
+          element = {
+            <PrivateRoute>
+              <Dashboard/>
+            </PrivateRoute>
+          }
         />
       </Routes>
     </div>
