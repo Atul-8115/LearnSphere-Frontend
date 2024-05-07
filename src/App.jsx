@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/core/Auth/PrivateRoute'
 import MyProfile from './components/core/Dashboard/MyProfile'
 import Error from './pages/Error'
+import Settings from './components/core/Dashboard/Settings'
 
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
         >
            {/* Route for all users */}
            <Route path='/dashboard/my-profile' element={<MyProfile/>}/>
+           <Route path='/dashboard/settings' element={<Settings/>}/>
         </Route>
 
         <Route path='*' element={<Error/>}/>
