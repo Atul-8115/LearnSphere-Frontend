@@ -2,6 +2,7 @@ import { settingsEndpoints } from "../apis"
 import { toast } from "react-hot-toast"
 import { apiConnector } from "../apiconnector"
 import { setUser } from "../../slices/profileSlice"
+import { logout } from "./authApi"
 
 
 
@@ -73,6 +74,49 @@ export function updateProfile(refreshToken, formData) {
         catch (error) {
             console.log("UPDATE_PROFILE_API API ERROR............", error)
             toast.error("Could Not Update Profile")
+        }
+        toast.dismiss(toastId)
+    }
+}
+
+export async function changePassword(refreshToken, formData) {
+const toastId = toast.loading("Loading...")
+    try {
+        const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
+            Authorisation: `Bearer ${refreshToken}`
+        })
+
+        console.log("Change password api response -> ",response)
+
+        if(!response.data.success) {
+            throw new Error(response.data.message)
+        }
+
+        toast.success("Passwrod Changed Successfully")
+    } catch (error) {
+        console.log("CHANGE_PASSWORD_API API ERROR............", error)
+        toast.error(error.response.data.message)
+    }
+    toast.dismiss(toastId)
+}
+
+export function deleteProfile(refreshToken, navigate) {
+    return async (dispatch) => {
+        const toastId = toast.loading("Loading...")
+        try {
+            const response = await apiConnector("DELETE",DELETE_PROFILE_API,null, {
+                Authorisation: `Bearer ${refreshToken}`
+            })
+            console.log("DELETE_PROFILE_API API RESPONSE............", response)
+
+            if(!response.data.success) {
+                throw new Error(response.data.message)
+            }
+            toast.success("Profile Deleted Successfully.")
+            dispatch(logout(navigate))
+        } catch (error) {
+            console.log("DELETE_PROFILE_API API ERROR............", error)
+            toast.error("Could Not Delete Profile")
         }
         toast.dismiss(toastId)
     }
