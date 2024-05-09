@@ -15,9 +15,14 @@ import PrivateRoute from './components/core/Auth/PrivateRoute'
 import MyProfile from './components/core/Dashboard/MyProfile'
 import Error from './pages/Error'
 import Settings from './components/core/Dashboard/Settings'
+import { useSelector } from 'react-redux'
+import { ACCOUNT_TYPE } from './utils/constaints'
+import Cart from './components/core/Dashboard/Cart/Index'
 
 
 function App() {
+
+  const { user } = useSelector((state) => state.profile)
 
   return (
     <div className='w-screen min-h-screen bg-richblack-900 flex flex-col font-inter '>
@@ -83,6 +88,12 @@ function App() {
            {/* Route for all users */}
            <Route path='/dashboard/my-profile' element={<MyProfile/>}/>
            <Route path='/dashboard/settings' element={<Settings/>}/>
+
+           {
+              user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                <Route path='dashboard/cart' element={<Cart/>}/>
+              )
+           }
         </Route>
 
         <Route path='*' element={<Error/>}/>
