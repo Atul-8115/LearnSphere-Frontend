@@ -15,13 +15,19 @@ export default function Upload({
   video = false,
   viewData = null,
   editData = null,
+  getValues,
 }) {
+
   const { course } = useSelector((state) => state.course)
   const [selectedFile, setSelectedFile] = useState(null)
   const [previewSource, setPreviewSource] = useState(
     viewData ? viewData : editData ? editData : ""
   )
   const inputRef = useRef(null)
+
+  const handleClick = () => {
+    inputRef.current.click()
+  }
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0]
@@ -39,7 +45,7 @@ export default function Upload({
   })
 
   const previewFile = (file) => {
-    // console.log(file)
+    console.log("I'm in upload file -> ",file)
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onloadend = () => {
@@ -53,10 +59,14 @@ export default function Upload({
   }, [register])
 
   useEffect(() => {
+    console.log("I'm printing selectedFile -> ",selectedFile)
     setValue(name, selectedFile)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFile, setValue])
 
+  const formData = getValues();
+
+  console.log("Printing formData in upload file -> ",formData)
   return (
     <div className="flex flex-col space-y-2">
       <label className="text-sm text-richblack-5" htmlFor={name}>
@@ -103,7 +113,7 @@ export default function Upload({
             </div>
             <p className="mt-2 max-w-[200px] text-center text-sm text-richblack-200">
               Drag and drop an {!video ? "image" : "video"}, or click to{" "}
-              <span className="font-semibold text-yellow-50">Browse</span> a
+              <button onClick={handleClick} className="font-semibold text-yellow-50">Browse</button> a
               file
             </p>
             <ul className="mt-10 flex list-disc justify-between space-x-12 text-center  text-xs text-richblack-200">

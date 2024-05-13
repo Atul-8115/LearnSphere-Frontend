@@ -13,8 +13,6 @@ import {
 import { setCourse, setStep } from "../../../../../slices/courseSlice"
 import { COURSE_STATUS } from "../../../../../utils/constaints"
 import IconBtn from "../../../../common/IconBtn"
-// import Upload from "../Upload"
-// import ChipInput from "./ChipInput"
 import RequirementsField from "./RequirementField"
 import ChipInput from "./ChipInput"
 import Upload from "../Upload"
@@ -33,12 +31,15 @@ export default function CourseInformationForm() {
   const { course, editCourse } = useSelector((state) => state.course)
   const [loading, setLoading] = useState(false)
 
+  // console.log("I'm Printing course -> ",course)
+
   const [courseCategories, setCourseCategories] = useState([])
+
   useEffect(() => {
     const getCategories = async () => {
       setLoading(true)
       const categories = await fetchCourseCategories()
-      console.log("Printing categories response -> ",categories)
+      // console.log("Printing categories response -> ",categories)
       if (categories.length > 0) {
         // console.log("categories", categories)
         setCourseCategories(categories)
@@ -62,9 +63,11 @@ export default function CourseInformationForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  console.log("Printing course's thumbnail -> ",course)
+
   const isFormUpdated = () => {
     const currentValues = getValues()
-    // console.log("changes after editing form values:", currentValues)
+    console.log("changes after editing form values:", currentValues)
     if (
       currentValues.courseTitle !== course.courseName ||
       currentValues.courseShortDesc !== course.courseDescription ||
@@ -269,6 +272,7 @@ export default function CourseInformationForm() {
         setValue={setValue}
         errors={errors}
         editData={editCourse ? course?.thumbnail : null}
+        getValues={getValues}
       />
       {/* Benefits of the course */}
       <div className="flex flex-col space-y-2">
