@@ -14,7 +14,7 @@ export async function getUserEnrolledCourses(refreshToken) {
             GET_USER_ENROLLED_COURSES_API,
             null,
             {
-                Authorisation: `Bearer ${refreshToken}`
+                Authorization: `Bearer ${refreshToken}`
             }
         )
         console.log("AFTER Calling BACKEND API FOR ENROLLED COURSES");

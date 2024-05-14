@@ -23,7 +23,7 @@ export function updateDisplayPicture(refreshToken, formData) {
                 formData,
                 {
                     "Content-Type": "multipart/form-data",
-                    Authorisation: `Bearer ${refreshToken}`
+                    Authorization: `Bearer ${refreshToken}`
                 }
             )
             console.log(
@@ -51,7 +51,7 @@ export function updateProfile(refreshToken, formData) {
         const toastId = toast.loading("Loading...")
         try {
             const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
-                Authorisation: `Bearer ${refreshToken}`
+                Authorization: `Bearer ${refreshToken}`
             })
 
             console.log("UPDATE_PROFILE_API API RESPONSE............", response)
@@ -83,7 +83,7 @@ export async function changePassword(refreshToken, formData) {
 const toastId = toast.loading("Loading...")
     try {
         const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
-            Authorisation: `Bearer ${refreshToken}`
+            Authorization: `Bearer ${refreshToken}`
         })
 
         console.log("Change password api response -> ",response)
@@ -105,7 +105,7 @@ export function deleteProfile(refreshToken, navigate) {
         const toastId = toast.loading("Loading...")
         try {
             const response = await apiConnector("DELETE",DELETE_PROFILE_API,null, {
-                Authorisation: `Bearer ${refreshToken}`
+                Authorization: `Bearer ${refreshToken}`
             })
             console.log("DELETE_PROFILE_API API RESPONSE............", response)
 
