@@ -11,7 +11,7 @@ import { deleteSection, deleteSubSection } from '../../../../../services/operati
 import { IoFastFood } from 'react-icons/io5'
 import { setCourse } from '../../../../../slices/courseSlice'
 
-const NestedView = ({handleChangeEditSectionName}) => {
+const NestedView = ({courseId,handleChangeEditSectionName}) => {
 
     const {course} = useSelector((state) => state.course);
     const {refreshToken} = useSelector((state) => state.auth);
@@ -23,12 +23,12 @@ const NestedView = ({handleChangeEditSectionName}) => {
 
     const [confirmationModal, setConfirmationModal] = useState(null);
     useEffect(() => {
-        console.log("REndering it again");
+        console.log("Rendering it again");
     });
     const handleDeleteSection = async (sectionId) => {
         const result = await deleteSection({
             sectionId,
-            courseId: course._id},
+            courseId: courseId},
             refreshToken
         );
         console.log("PRINTING AFTER DELETE SECTIOn", result);
@@ -52,8 +52,8 @@ const NestedView = ({handleChangeEditSectionName}) => {
   return (
     <div>
           
-              <div className='rounded-lg bg-richblack-700 p-6 px-8'>
-        {course?.courseContent?.map((section) => (
+              <div className='rounded-lg bg-richblack-700 p-6 px-8 text-richblack-5'>
+        {course?.data?.courseContent?.map((section) => (
             <details key={section._id} open>
 
                 <summary className='flex items-center justify-between gap-x-3 border-b-2'>
@@ -69,16 +69,16 @@ const NestedView = ({handleChangeEditSectionName}) => {
                         </button>
 
                         <button
-                        onClick={() => {
-                            setConfirmationModal({
-                                text1: "Delete this Section",
-                                text2: "All the lectures in this section wil be deleted",
-                                btn1Text: "Delete",
-                                btn2Text: "Cancel",
-                                btn1Handler: () => handleDeleteSection(section._id),
-                                btn2Handler: () => setConfirmationModal(null),
-                            })
-                        }}
+                            onClick={() => {
+                                setConfirmationModal({
+                                    text1: "Delete this Section",
+                                    text2: "All the lectures in this section wil be deleted",
+                                    btn1Text: "Delete",
+                                    btn2Text: "Cancel",
+                                    btn1Handler: () => handleDeleteSection(section._id),
+                                    btn2Handler: () => setConfirmationModal(null),
+                                })
+                            }}
                         >
                             <RiDeleteBin6Line />
                         </button>
@@ -126,8 +126,8 @@ const NestedView = ({handleChangeEditSectionName}) => {
                         ))
                     }
                     <button
-                    onClick={() => setAddSubSection(section._id)}
-                    className='mt-4 flex items-center gap-x-2 text-yellow-50'
+                        onClick={() => setAddSubSection(section._id)}
+                        className='mt-4 flex items-center gap-x-2 text-yellow-50'
                     >
                         <AiOutlinePlus />
                         <p>Add Lecture</p>
@@ -142,18 +142,21 @@ const NestedView = ({handleChangeEditSectionName}) => {
         modalData={addSubSection}
         setModalData={setAddSubSection}
         add={true}
+        courseId={courseId}
       />) 
       :viewSubSection ? 
       (<SubSectionModal 
         modalData={viewSubSection}
         setModalData={setViewSubSection}
         view={true}
+        courseId={courseId}
       />) 
       : editSubSection ? 
       (<SubSectionModal 
         modalData={editSubSection}
         setModalData={setEditSubSection}
         edit={true}
+        courseId={courseId}
       />)
       : (<div></div>)
       }

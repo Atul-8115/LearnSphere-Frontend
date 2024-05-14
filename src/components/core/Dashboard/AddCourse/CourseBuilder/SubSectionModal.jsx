@@ -16,14 +16,15 @@ const SubSectionModal = ({
     add = false,
     view = false,
     edit = false,
+    courseId,
 }) => {
 
     const {
         register, 
         handleSubmit, 
         setValue,
-        formState: {errors},
         getValues,
+        formState: {errors},
     } = useForm();
 
     const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const SubSectionModal = ({
             setValue("lectureDesc", modalData.description);
             setValue("lectureVideo", modalData.videoUrl);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     const isFormUpdated = () => {
@@ -58,7 +60,7 @@ const SubSectionModal = ({
 
         formData.append("sectionId", modalData.sectionId);
         formData.append("subSectionId", modalData._id);
-
+        formData.append('courseId',courseId)
         if(currentValues.lectureTitle !== modalData.title) {
             formData.append("title", currentValues.lectureTitle);
         }
@@ -105,14 +107,18 @@ const SubSectionModal = ({
         formData.append("title", data.lectureTitle);
         formData.append("description", data.lectureDesc);
         formData.append("video", data.lectureVideo);
+        formData.append('courseId',courseId)
         setLoading(true);
         //API CALL
+
+        console.log("Printing course id -> ",courseId)
         const result = await createSubSection(formData, refreshToken);
 
         if(result) {
             //TODO: check for updation
             dispatch(setCourse(result))
         }
+        console.log("Printing result -> ",course)
         setModalData(null);
         setLoading(false);
 
@@ -146,7 +152,7 @@ const SubSectionModal = ({
                         id='lectureTitle'
                         placeholder='Enter Lecture Title'
                         {...register("lectureTitle", {required:true})}
-                        className='w-full'
+                        className='w-full text-richblack-800'
                     />
                     {errors.lectureTitle && (<span>
                         Lecture Title is required
@@ -158,7 +164,7 @@ const SubSectionModal = ({
                         id='lectureDesc'
                         placeholder='Enter Lecture Description'
                         {...register("lectureDesc", {required:true})}
-                        className='w-full min-h-[130px]'
+                        className='w-full min-h-[130px] text-richblack-800'
                     />
                     {
                         errors.lectureDesc && (<span>
@@ -184,4 +190,3 @@ const SubSectionModal = ({
 }
 
 export default SubSectionModal
-//PAANI BREAK - 2min

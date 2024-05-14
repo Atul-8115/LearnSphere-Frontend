@@ -22,6 +22,7 @@ const CourseBuilderForm = () => {
 
   useEffect(() => {
     console.log("UPDATED");
+    console.log("Printing course -> ",course)
   }, [course])
 
 
@@ -46,10 +47,11 @@ const CourseBuilderForm = () => {
         courseId: course._id,
       },refreshToken)
     }
-
+    // console.log("Printing my result -> ",result)
     //update values
     if(result) {
       dispatch(setCourse(result));
+      // console.log("Here I'm printing course -> ",course)
       setEditSectionName(null);
       setValue("sectionName", "");
     }
@@ -68,7 +70,19 @@ const CourseBuilderForm = () => {
     dispatch(setEditCourse(true));
   }
 
+  const handleChangeEditSectionName = (sectionId, sectionName) => {
+    if(editSectionName === sectionId ){
+      cancelEdit();
+      return;
+    }
+    
+    setEditSectionName(sectionId);
+    setValue("sectionName", sectionName);
+  }
+
   const goToNext= () => {
+    console.log("Printing course content -> ",course?.courseContent)
+    // console.log("Printing course id -> ",course.data._id)
     if(course?.courseContent?.length === 0) {
       toast.error("Please add atleast one Section");
       return;
@@ -81,15 +95,6 @@ const CourseBuilderForm = () => {
     dispatch(setStep(3));
   }
 
-  const handleChangeEditSectionName = (sectionId, sectionName) => {
-    if(editSectionName === sectionId ){
-      cancelEdit();
-      return;
-    }
-    
-    setEditSectionName(sectionId);
-    setValue("sectionName", sectionName);
-  }
 
   return (
     <div className='text-white'>
@@ -101,7 +106,7 @@ const CourseBuilderForm = () => {
             id='sectionName'
             placeholder='Add section name'
             {...register("sectionName", {required:true})}
-            className='w-full'
+            className='w-full text-richblack-800'
           />
           {errors.sectionName && (
             <span>Section Name is required</span>
@@ -119,9 +124,9 @@ const CourseBuilderForm = () => {
           </IconBtn>
           {editSectionName && (
             <button
-            type='button'
-            onClick={cancelEdit}
-            className='text-sm text-richblack-300 underline ml-10'
+              type='button'
+              onClick={cancelEdit}
+              className='text-sm text-richblack-300 underline ml-10'
             >
               Cancel Edit
             </button>
@@ -129,8 +134,8 @@ const CourseBuilderForm = () => {
         </div>
       </form>
 
-      {course?.courseContent?.length > 0 && (
-        <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
+      {course?.data?.courseContent?.length > 0 && (
+        <NestedView courseId={course.data._id} handleChangeEditSectionName={handleChangeEditSectionName} />
       )}
 
       <div className='flex justify-end gap-x-3 mt-10'>

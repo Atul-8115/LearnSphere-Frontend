@@ -135,7 +135,6 @@ export const editCourseDetails = async (data, refreshToken) => {
 // create a section
 export const createSection = async (data, refreshToken) => {
   let result = null
-  console.log("Priting refreshToken -> ",refreshToken)
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", CREATE_SECTION_API, data, {
@@ -146,7 +145,8 @@ export const createSection = async (data, refreshToken) => {
       throw new Error("Could Not Create Section")
     }
     toast.success("Course Section Created")
-    result = response?.data?.updatedCourse
+    result = response?.data
+    console.log("Printing response in createSection -> ",result)
   } catch (error) {
     console.log("CREATE SECTION API ERROR............", error)
     toast.error(error.message)
@@ -158,7 +158,8 @@ export const createSection = async (data, refreshToken) => {
 // create a subsection
 export const createSubSection = async (data, refreshToken) => {
   let result = null
-  console.log("Priting refreshToken -> ",refreshToken)
+  // console.log("Priting refreshToken -> ",refreshToken)
+  console.log("Printing subsection -> ",data)
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", CREATE_SUBSECTION_API, data, {
@@ -170,6 +171,7 @@ export const createSubSection = async (data, refreshToken) => {
     }
     toast.success("Lecture Added")
     result = response?.data?.data
+    
   } catch (error) {
     console.log("CREATE SUB-SECTION API ERROR............", error)
     toast.error(error.message)

@@ -64,9 +64,9 @@ export default function Upload({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFile, setValue])
 
-  const formData = getValues();
+  // const formData = getValues();
 
-  console.log("Printing formData in upload file -> ",formData)
+  // console.log("Printing formData in upload file -> ",formData)
   return (
     <div className="flex flex-col space-y-2">
       <label className="text-sm text-richblack-5" htmlFor={name}>
