@@ -15,7 +15,6 @@ export default function Upload({
   video = false,
   viewData = null,
   editData = null,
-  getValues,
 }) {
 
   const { course } = useSelector((state) => state.course)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import IconBtn from '../../../../common/IconBtn';
-import {MdAddCircleOutline} from "react-icons/md"
+import {MdAddCircleOutline, MdNavigateNext} from "react-icons/md"
 import {BiAddToQueue} from "react-icons/bi"
 import { useDispatch, useSelector } from 'react-redux';
 import {BiRightArrow} from "react-icons/bi"
@@ -97,13 +97,14 @@ const CourseBuilderForm = () => {
 
 
   return (
-    <div className='text-white'>
-      <p>Course Builder</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor='sectionName'>Section name <sup>*</sup></label>
+    <div className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6">
+      <p className="text-2xl font-semibold text-richblack-5">Course Builder</p>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="flex flex-col space-y-2">
+          <label className="text-sm text-richblack-5" htmlFor='sectionName'>Section name <sup className="text-pink-200">*</sup></label>
           <input 
             id='sectionName'
+            disabled={loading}
             placeholder='Add section name'
             {...register("sectionName", {required:true})}
             style={{
@@ -112,12 +113,13 @@ const CourseBuilderForm = () => {
            className="form-style w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
           />
           {errors.sectionName && (
-            <span>Section Name is required</span>
+            <span className="ml-2 text-xs tracking-wide text-pink-200">Section Name is required</span>
           )}
         </div>
-        <div className='mt-10 flex w-full'>
+        <div className="flex items-end gap-x-4">
           <IconBtn 
             type="Submit"
+            disabled={loading}
             text={editSectionName ? "Edit Section Name" : "Create Section"}
             outline={true}
             customClasses={"text-white"}
@@ -137,18 +139,19 @@ const CourseBuilderForm = () => {
         </div>
       </form>
 
-      {course?.data?.courseContent?.length > 0 && (
-        <NestedView courseId={course.data._id} handleChangeEditSectionName={handleChangeEditSectionName} />
+      {course?.courseContent?.length > 0 && (
+        <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
       )}
 
-      <div className='flex justify-end gap-x-3 mt-10'>
+      <div className="flex justify-end gap-x-3">
         <button
-        onClick={goBack}
-        className='rounded-md cursor-pointer flex items-center '>
+          onClick={goBack}
+          className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900`}
+        >
           Back
         </button>
-        <IconBtn text="Next" onclick={goToNext}>
-          <BiRightArrow />
+        <IconBtn disabled={loading} text="Next" onclick={goToNext}>
+           <MdNavigateNext />
         </IconBtn>
 
       </div>

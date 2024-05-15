@@ -145,7 +145,7 @@ export const createSection = async (data, refreshToken) => {
       throw new Error("Could Not Create Section")
     }
     toast.success("Course Section Created")
-    result = response?.data
+    result = response?.data?.data
     console.log("Printing response in createSection -> ",result)
   } catch (error) {
     console.log("CREATE SECTION API ERROR............", error)
@@ -183,7 +183,7 @@ export const createSubSection = async (data, refreshToken) => {
 // update a section
 export const updateSection = async (data, refreshToken) => {
   let result = null
-  console.log("Priting refreshToken -> ",refreshToken)
+  // console.log("Priting refreshToken -> ",refreshToken)
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", UPDATE_SECTION_API, data, {
@@ -195,6 +195,7 @@ export const updateSection = async (data, refreshToken) => {
     }
     toast.success("Course Section Updated")
     result = response?.data?.data
+    console.log("Printing result -> ",result)
   } catch (error) {
     console.log("UPDATE SECTION API ERROR............", error)
     toast.error(error.message)
@@ -228,7 +229,7 @@ export const updateSubSection = async (data, refreshToken) => {
 
 // delete a section
 export const deleteSection = async (data, refreshToken) => {
-  console.log("Priting refreshToken -> ",refreshToken)
+  // console.log("Priting refreshToken -> ",refreshToken)
   let result = null
   const toastId = toast.loading("Loading...")
   try {
@@ -250,7 +251,7 @@ export const deleteSection = async (data, refreshToken) => {
 }
 // delete a subsection
 export const deleteSubSection = async (data, refreshToken) => {
-  console.log("Priting refreshToken -> ",refreshToken)
+  // console.log("Priting refreshToken -> ",refreshToken)
   let result = null
   const toastId = toast.loading("Loading...")
   try {
