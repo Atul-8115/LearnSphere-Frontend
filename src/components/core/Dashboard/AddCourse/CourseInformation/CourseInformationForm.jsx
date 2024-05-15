@@ -131,7 +131,7 @@ export default function CourseInformationForm() {
         // console.log("Edit Form data: ", formData)
         setLoading(true)
         const result = await editCourseDetails(formData, refreshToken)
-        console.log("Printing editCourseDetails -> ",result)
+        // console.log("Printing editCourseDetails -> ",result)
         setLoading(false)
         if (result) {
           dispatch(setStep(2))
@@ -176,7 +176,10 @@ export default function CourseInformationForm() {
           id="courseTitle"
           placeholder="Enter Course Title"
           {...register("courseTitle", { required: true })}
-          className="form-style w-full"
+          style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+          className="form-style w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
         />
         {errors.courseTitle && (
           <span className="ml-2 text-xs tracking-wide text-pink-200">
@@ -193,7 +196,10 @@ export default function CourseInformationForm() {
           id="courseShortDesc"
           placeholder="Enter Description"
           {...register("courseShortDesc", { required: true })}
-          className="form-style resize-x-none min-h-[130px] w-full"
+          style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+          className="form-style resize-x-none min-h-[130px] w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
         />
         {errors.courseShortDesc && (
           <span className="ml-2 text-xs tracking-wide text-pink-200">
@@ -217,7 +223,10 @@ export default function CourseInformationForm() {
                 value: /^(0|[1-9]\d*)(\.\d+)?$/,
               },
             })}
-            className="form-style w-full !pl-12"
+            style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+          className="form-style w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5 !pl-12"
           />
           <HiOutlineCurrencyRupee className="absolute left-3 top-1/2 inline-block -translate-y-1/2 text-2xl text-richblack-400" />
         </div>
@@ -236,7 +245,10 @@ export default function CourseInformationForm() {
           {...register("courseCategory", { required: true })}
           defaultValue=""
           id="courseCategory"
-          className="form-style w-full"
+          style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+          className="form-style w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
         >
           <option value="" disabled>
             Choose a Category
@@ -283,7 +295,10 @@ export default function CourseInformationForm() {
           id="courseBenefits"
           placeholder="Enter benefits of the course"
           {...register("courseBenefits", { required: true })}
-          className="form-style resize-x-none min-h-[130px] w-full"
+          style={{
+                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+          className="form-style w-full resize-x-none min-h-[130px] rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
         />
         {errors.courseBenefits && (
           <span className="ml-2 text-xs tracking-wide text-pink-200">
