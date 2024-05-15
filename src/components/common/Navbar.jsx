@@ -11,16 +11,6 @@ import { categories } from '../../services/apis'
 import { useState } from 'react'
 import {IoIosArrowDropdownCircle} from "react-icons/io"
 
-const subLinks = [
-    {
-        title: "python",
-        link:"/catalog/python"
-    },
-    {
-        title: "web dev",
-        link:"/catalog/web-development"
-    },
-];
 
 
 const Navbar = () => {
@@ -29,33 +19,34 @@ const Navbar = () => {
     const {totalItems} = useSelector( (state) => state.cart )
     const location = useLocation();
 
-    const [ssubLinks, setSsubLinks]  = useState([]);
+    const [subLinks, setSubLinks]  = useState([]);
+    const [loading, setLoading] = useState(false)
 
     // console.log("Printing token -> ",token)
 
-    const fetchSublinks = async() => {
-        try{
-            const result = await apiConnector("GET", categories.CATEGORIES_API);
-            console.log("Printing Sublinks result:" , result);
-            setSsubLinks(result.data.data);
-        }
-        catch(error) {
-            console.log("Could not fetch the category list",error.message);
-        }
-    }
-
-    useEffect( () => {
-        fetchSublinks();
-    },[] )
-
-    console.log("Printing sublinks -> ",ssubLinks)
+    useEffect(() => {
+        ;(async () => {
+            setLoading(true)
+            try {
+                const res = await apiConnector("GET", categories.CATEGORIES_API)
+                setSubLinks(res.data.data)
+            } catch (error) {
+                console.log("Could not fetch Categories.",error)
+            }
+            setLoading(false)
+        })()
+    },[])
 
     const matchRoute = (route) => {
         return matchPath({path:route}, location.pathname);
     }
 
   return (
-    <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700'>
+    <div
+       className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${
+        location.pathname !== "/" ? "bg-richblack-800" : ""
+      } transition-all duration-200`}
+    >
       <div className='flex w-11/12 max-w-maxContent items-center justify-between'>
         {/* Image */}
       <Link to="/">
@@ -79,16 +70,16 @@ const Navbar = () => {
                                  top-[50%]
                                 flex flex-col rounded-md bg-richblack-5 p-4 text-richblack-900
                                 opacity-0 transition-all duration-200 group-hover:visible
-                                group-hover:opacity-100 lg:w-[300px]'>
+                                group-hover:opacity-100 lg:w-[300px] z-20'>
 
                                 <div className='absolute left-[50%] top-0
                                 translate-x-[80%]
-                                translate-y-[-45%] h-6 w-6 rotate-45 rounded bg-richblack-5'>
+                                translate-y-[-45%] h-6 w-6 rotate-45 rounded bg-richblack-5 z-50'>
                                 </div>
 
                                 {
-                                    ssubLinks.length ? (
-                                        ssubLinks.map( (subLink, index) => (
+                                    subLinks.length ? (
+                                        subLinks.map( (subLink, index) => (
                                                 <Link to='/' key={index}>
                                                     <p>{subLink.name}</p>
                                                 </Link>
