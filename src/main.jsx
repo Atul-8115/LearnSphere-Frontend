@@ -9,7 +9,6 @@ import rootReducer from './reducer'
 import { Toaster } from 'react-hot-toast'
 import {dotenv} from "dotenv"
 
-
 // Setup for using redux toolkit
 const store = configureStore({
   reducer:rootReducer,
