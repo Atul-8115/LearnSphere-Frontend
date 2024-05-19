@@ -7,6 +7,7 @@ import { getCatalogaPageData } from '../services/operations/pageAndComponentData
 import Course_Card from '../components/core/Catalog/Course_Card';
 import CourseSlider from '../components/core/Catalog/CourseSlider';
 import { useSelector } from 'react-redux'
+import Error from './Error'
 const Catalog = () => {
 
     const {catalogName} = useParams();
@@ -44,7 +45,17 @@ const Catalog = () => {
         
     },[categoryId]);
 
-
+    if(loading || !catalogPageData) {
+        return (
+            <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+                <div className="spinner"></div>
+            </div>
+        )
+    }
+    
+    if(!loading && !catalogPageData.success) {
+        return <Error/>
+    }
   return (
     <>
           {/* Hero Section */}
@@ -111,16 +122,16 @@ const Catalog = () => {
           {/* Section 3 */}
           <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
             <div className="section_heading text-richblack-5">Frequently Bought</div>
-            <div className="py-8">
-              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                {catalogPageData?.data?.mostSellingCourses
-                  ?.slice(0, 4)
-                  .map((course, i) => (
-                    <Course_Card course={course} key={i} Height={"h-[400px]"} />
-                  ))}
-              </div>
+                <div className="py-8">
+                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                        {catalogPageData?.data?.mostSellingCourses
+                        ?.slice(0, 4)
+                        .map((course, i) => (
+                            <Course_Card course={course} key={i} Height={"h-[400px]"} />
+                        ))}
+                    </div>
+                </div>
             </div>
-          </div>
     
           <Footer />
         </>
