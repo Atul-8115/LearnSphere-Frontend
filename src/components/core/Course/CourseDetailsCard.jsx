@@ -13,11 +13,13 @@ const CourseDetailsCard = ({course, setConfirmationModal,handleBuyCourse}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    console.log("Printing course -> ",course)
     const {
-        thumnail: ThumnailImage,
-        price: CurrentPrice,
+        thumbnail,
+        price,
     } = course
 
+    console.log("Printing thumbnail -> ",thumbnail)
     const handleAddToCart = () => {
         if(user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
             toast.error("You are an Instructor,you can't buy a course")
@@ -45,26 +47,36 @@ const CourseDetailsCard = ({course, setConfirmationModal,handleBuyCourse}) => {
   return (
     <div>
       <img
-          src={ThumnailImage}
+          src={thumbnail}
           alt='Thumnail Image'
           className='max-h-[300px] min-h-[180px] w-[400px] rounded-xl'
       />
       <div>
-        Rs. {CurrentPrice}
+        Rs. {price}
       </div>
-      <div>
-      <button
-            className='bg-yellow-50 w-fit text-richblack-900'
-            onClick={
-                user && course?.studentsEnrolled.includes(user?._id)
-                ? ()=> navigate("/dashboard/enrolled-courses")
-                : handleBuyCourse
-            }
-        >
-            {
-                user && course?.studentsEnrolled.includes(user?._id) ? "Go to Course ": "Buy Now"
-            }
-      </button>
+      <div className='flex flex-row gap-3'>
+        <button
+                className='bg-yellow-50 w-fit text-richblack-900'
+                onClick={
+                    user && course?.studentsEnrolled.includes(user?._id)
+                    ? ()=> navigate("/dashboard/enrolled-courses")
+                    : handleBuyCourse
+                }
+            >
+                {
+                    user && course?.studentsEnrolled.includes(user?._id) ? "Go to Course ": "Buy Now"
+                }
+        </button>
+
+        {
+            (!course?.studentsEnrolled.includes(user?.id) && (
+                <button onClick={handleAddToCart}  
+                            className='bg-yellow-50 w-fit text-richblack-900'
+                >
+                    Add to Cart
+                </button>
+            ))
+        }
       </div>
 
       <div>

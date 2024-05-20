@@ -26,6 +26,21 @@ function loadScript(src) {
 }
 
 
+async function sendPaymentSuccessEmail(response, amount, refreshToken) {
+    try{
+        await apiConnector("POST", SEND_PAYMENT_SUCCESS_EMAIL_API, {
+            orderId: response.razorpay_order_id,
+            paymentId: response.razorpay_payment_id,
+            amount,
+        },{
+            Authorization: `Bearer ${refreshToken}`
+        })
+    }
+    catch(error) {
+        console.log("PAYMENT SUCCESS EMAIL ERROR....", error);
+    }
+}
+
 export async function buyCourse(refreshToken, courses, userDetails, navigate, dispatch) {
     const toastId = toast.loading("Loading...");
     try{
@@ -51,9 +66,9 @@ export async function buyCourse(refreshToken, courses, userDetails, navigate, di
         //options
         const options = {
             key: import.meta.env.VITE_APP_RAZORPAY_KEY,
-            currency: orderResponse.data.message.currency,
-            amount: `${orderResponse.data.message.amount}`,
-            order_id:orderResponse.data.message.id,
+            currency: orderResponse.data.data.currency,
+            amount: `${orderResponse.data.data.amount}`,
+            order_id:orderResponse.data.data.id,
             name:"LearnSphere",
             description: "Thank You for Purchasing the Course",
             image:rzpLogo,
@@ -63,7 +78,7 @@ export async function buyCourse(refreshToken, courses, userDetails, navigate, di
             },
             handler: function(response) {
                 //send successful wala mail
-                sendPaymentSuccessEmail(response, orderResponse.data.message.amount,refreshToken );
+                sendPaymentSuccessEmail(response, orderResponse.data.data.amount,refreshToken );
                 //verifyPayment
                 verifyPayment({...response, courses}, refreshToken, navigate, dispatch);
             }
@@ -82,21 +97,6 @@ export async function buyCourse(refreshToken, courses, userDetails, navigate, di
         toast.error("Could not make Payment");
     }
     toast.dismiss(toastId);
-}
-
-async function sendPaymentSuccessEmail(response, amount, refreshToken) {
-    try{
-        await apiConnector("POST", SEND_PAYMENT_SUCCESS_EMAIL_API, {
-            orderId: response.razorpay_order_id,
-            paymentId: response.razorpay_payment_id,
-            amount,
-        },{
-            Authorization: `Bearer ${refreshToken}`
-        })
-    }
-    catch(error) {
-        console.log("PAYMENT SUCCESS EMAIL ERROR....", error);
-    }
 }
 
 //verify payment

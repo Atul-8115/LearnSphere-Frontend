@@ -7,6 +7,8 @@ import GetAvgRating from '../utils/avgRating';
 import Error from './Error';
 import ConfirmationModal from "../components/common/ConfirmationModal"
 import CourseDetailsCard from '../components/core/Course/CourseDetailsCard';
+import RatingStars from '../components/common/RatingStars';
+import { formatDate } from '../services/formDate';
 
 const CourseDetails = () => {
 
@@ -37,7 +39,8 @@ const CourseDetails = () => {
     const [avgReviewCount, setAverageReviewCount] = useState(0);
 
     useEffect(() => {
-        const count = GetAvgRating(courseData?.data?.courseDetails.ratingAndReviews)
+        const count = GetAvgRating(courseData?.data?.courseDetails[0].ratingAndReviews)
+        console.log("Printing review count -> ",count)
         setAverageReviewCount(count)
     },[courseData])
 
@@ -45,7 +48,7 @@ const CourseDetails = () => {
 
     useEffect(() => {
         let lectures = 0;
-        courseData?.data?.courseDetails?.courseContent?.forEach((sec) => {
+        courseData?.data?.courseDetails[0]?.courseContent?.forEach((sec) => {
             lectures += sec.subSection.length || 0
         })
         setTotalNoOfLectures(lectures);
@@ -64,6 +67,7 @@ const CourseDetails = () => {
     const handleBuyCourse = () => {
         
         if(refreshToken) {
+            console.log("I am in buy course handler")
             buyCourse(refreshToken, [courseId], user, navigate, dispatch);
             return;
         }
@@ -105,7 +109,9 @@ const CourseDetails = () => {
         instructor,
         studentsEnrolled,
         createdAt,
-    } = courseData.data.courseDetails;
+    } = courseData.data.courseDetails[0];
+
+    console.log("Printing course details -> ",courseData.data.courseDetails[0])
   return (
     <div className='flex flex-col  text-white'>
 
@@ -115,8 +121,8 @@ const CourseDetails = () => {
             <div className='flex gap-x-2'>
                 <span>{avgReviewCount}</span>
                 <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
-                <span>{`(${ratingAndReviews.length} reviews) `}</span>
-                <span>{`(${studentsEnrolled.length} students enrolled)`}</span>
+                <span>{`(${ratingAndReviews?.length} reviews) `}</span>
+                <span>{`(${studentsEnrolled?.length} students enrolled)`}</span>
             </div>
 
             <div>
@@ -134,7 +140,7 @@ const CourseDetails = () => {
 
             <div>
                 <CourseDetailsCard 
-                    course = {courseData?.data?.courseDetails}
+                    course = {courseData?.data?.courseDetails[0]}
                     setConfirmationModal = {setConfirmationModal}
                     handleBuyCourse = {handleBuyCourse}
                 />
