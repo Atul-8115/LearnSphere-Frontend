@@ -15,28 +15,32 @@ const ViewCourse = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const setCourseSpecificDetails = async () => {
-            const courseData = await getFullDetailsOfCourse(courseId, refreshToken)
-            dispatch(setCourseSectionData(courseData.courseDetails.courseContent));
-              dispatch(setEntireCourseData(courseData.courseDetails));
-              dispatch(setCompletedLectures(courseData.completedVideos));
-              let lectures = 0;
-              courseData?.courseDetails?.courseContent?.forEach((sec) => {
-                lectures += sec.subSection.length
-              })
-              dispatch(setTotalNoOfLectures(lectures))
-        }
-        setCourseSpecificDetails();
-    },[])
+      ;(async () => {
+        const courseData = await getFullDetailsOfCourse(courseId, refreshToken)
+        // console.log("Course Data here... ", courseData.courseDetails)
+        dispatch(setCourseSectionData(courseData?.courseDetails?.courseContent))
+        dispatch(setEntireCourseData(courseData?.courseDetails))
+        dispatch(setCompletedLectures(courseData?.completedVideos))
+        let lectures = 0
+        courseData?.courseDetails?.courseContent?.forEach((sec) => {
+          lectures += sec?.subSection?.length
+        })
+        dispatch(setTotalNoOfLectures(lectures))
+      })()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
   return (
     <>
-     <div>
-        <VideoDetailsSidebar setReviewModal={setReviewModal}/>
-        <div>
-            <Outlet/>
+      <div className="relative flex min-h-[calc(100vh-3.5rem)]">
+        <VideoDetailsSidebar setReviewModal={setReviewModal} />
+        <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
+          <div className="mx-6">
+            <Outlet />
+          </div>
         </div>
-     </div> 
-     {reviewModal && <CourseReviewModal setReviewModal={setReviewModal}/>}
+      </div>
+      {reviewModal && <CourseReviewModal setReviewModal={setReviewModal} />}
     </>
   )
 }

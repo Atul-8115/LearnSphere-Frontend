@@ -25,6 +25,7 @@ import EditCourse from './components/core/Dashboard/EditCourse'
 import Catalog from './pages/Catalog'
 import CourseDetails from './pages/CourseDetails'
 import ViewCourse from './pages/ViewCourse'
+import VideoDetails from './components/core/ViewCourse/VideoDetails'
 
 
 function App() {
@@ -128,7 +129,7 @@ function App() {
               <>
                 <Route
                   path='view-course/:courseId/section/:sectionId/sub-section/:subSectionId'
-                  // element={<VideoDetails/>}
+                  element={<VideoDetails/>}
                 />
               </>
              )

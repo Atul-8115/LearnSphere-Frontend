@@ -45,7 +45,7 @@ const CourseDetailsCard = ({course, setConfirmationModal,handleBuyCourse}) => {
         toast.success("Link Copied to Clipboard")
     }
   return (
-    <div>
+    <div className='text-richblack-5'>
       <img
           src={thumbnail}
           alt='Thumnail Image'
