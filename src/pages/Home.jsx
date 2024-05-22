@@ -10,6 +10,7 @@ import LearningLanguageSection from '../components/core/HomePage/LearningLanguag
 import Footer from '../components/common/Footer';
 import InstructorSection from '../components/core/HomePage/InstructorSection';
 import ExploreMore from '../components/core/HomePage/ExploreMore';
+import ReviewSlider from '../components/common/ReviewSlider';
 
 const Home = () => {
     return (
@@ -84,8 +85,9 @@ const Home = () => {
                       }
                   }
   
-                  codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
+                  codeblock={`<!DOCTYPE html>\n <html lang="en">\n<head>\n<title>This is myPage</title>\n</head>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav> <a href="/one">One</a> <a href="/two">Two</a> <a href="/three">Three</a>\n</nav>\n</body>`}
                   codeColor={"text-yellow-25"}
+                  backgroundGradient={<div className="codeblock1 absolute"></div>}
               />
           </div>
   
@@ -118,8 +120,9 @@ const Home = () => {
                       }
                   }
   
-                  codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
-                  codeColor={"text-yellow-25"}
+                  codeblock={`import React from "react";\n import CTAButton from "./Button";\nimport TypeAnimation from "react-type";\nimport { FaArrowRight } from "react-icons/fa";\n\nconst Home = () => {\nreturn (\n<div>Home</div>\n)\n}\nexport default Home;`}
+                  codeColor={"text-white"}
+                  backgroundGradient={<div className="codeblock2 absolute"></div>}
               />
           </div>
 
@@ -172,17 +175,9 @@ const Home = () => {
                     </div>
 
                 </div>
-                
-                
-
                 <TimelineSection />
-
                 <LearningLanguageSection />
-
             </div>
-
-            
-
       </div>
   
         {/*Section 3 */}
@@ -190,8 +185,11 @@ const Home = () => {
 
             <InstructorSection />
 
-            <h2 className='text-center text-4xl font-semobold mt-10'>review from Other Learners</h2>
+            <h1 className='text-center text-4xl font-semobold mt-10'>
+                Reviews From Other Learners
+            </h1>
             {/* Review Slider here */}
+            <ReviewSlider/>
         </div>
   
         {/*Footer */}

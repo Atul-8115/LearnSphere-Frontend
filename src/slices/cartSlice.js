@@ -35,9 +35,12 @@ const cartSlice = createSlice({
             toast.success("Course added to cart")
         },
         removeFromCart: (state, action) => {
+            console.log("I'm here in removeCart slice -> ",action.payload)
+            console.log("Printing cart items -> ",state)
             const course = action.payload
             const index = state.cart.findIndex((item) => item._id === course._id)
 
+            console.log("Printing index -> ",index)
             if(index >= 0) {
                 state.totalItems--
                 state.total -= state.cart[index].price
