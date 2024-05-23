@@ -78,9 +78,9 @@ const VideoDetailsSidebar = ({ setReviewModal }) => {
                   {course?.sectionName}
                 </div>
                 <div className="flex items-center gap-3">
-                  {/* <span className="text-[12px] font-medium">
-                    Lession {course?.subSection.length}
-                  </span> */}
+                  <span className="text-[12px] font-medium">
+                    Lession {course?.subSection?.length}
+                  </span>
                   <span
                     className={`${
                       activeStatus === course?.sectionName
@@ -116,7 +116,7 @@ const VideoDetailsSidebar = ({ setReviewModal }) => {
                         checked={completedLectures.includes(topic?._id)}
                         onChange={() => {}}
                       />
-                      {topic.title}
+                      {topic?.title}
                     </div>
                   ))}
                 </div>

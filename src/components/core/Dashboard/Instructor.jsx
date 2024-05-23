@@ -18,8 +18,8 @@ export default function Instructor() {
       setLoading(true)
       const instructorApiData = await getInstructorData(refreshToken)
       const result = await fetchInstructorCourses(refreshToken)
-      console.log(instructorApiData)
-      if (instructorApiData.length) setInstructorData(instructorApiData)
+      console.log("Printing instructor data",instructorApiData?.length)
+      if (instructorApiData?.length) setInstructorData(instructorApiData)
       if (result) {
         setCourses(result)
       }
@@ -37,7 +37,7 @@ export default function Instructor() {
     (acc, curr) => acc + curr.totalStudentsEnrolled,
     0
   )
-
+  console.log("Printing courses -> ",courses)
   return (
     <div>
       <div className="space-y-2">
@@ -50,7 +50,7 @@ export default function Instructor() {
       </div>
       {loading ? (
         <div className="spinner"></div>
-      ) : courses.length > 0 ? (
+      ) : courses?.length > 0 ? (
         <div>
           <div className="my-4 flex h-[450px] space-x-4">
             {/* Render chart / graph */}
@@ -71,7 +71,7 @@ export default function Instructor() {
                 <div>
                   <p className="text-lg text-richblack-200">Total Courses</p>
                   <p className="text-3xl font-semibold text-richblack-50">
-                    {courses.length}
+                    {courses?.length}
                   </p>
                 </div>
                 <div>
@@ -98,26 +98,26 @@ export default function Instructor() {
               </Link>
             </div>
             <div className="my-4 flex items-start space-x-6">
-              {courses.slice(0, 3).map((course) => (
-                <div key={course._id} className="w-1/3">
+              {courses?.slice(0, 3).map((course) => (
+                <div key={course?._id} className="w-1/3">
                   <img
-                    src={course.thumbnail}
-                    alt={course.courseName}
+                    src={course?.thumbnail}
+                    alt={course?.courseName}
                     className="h-[201px] w-full rounded-md object-cover"
                   />
                   <div className="mt-3 w-full">
                     <p className="text-sm font-medium text-richblack-50">
-                      {course.courseName}
+                      {course?.courseName}
                     </p>
                     <div className="mt-1 flex items-center space-x-2">
                       <p className="text-xs font-medium text-richblack-300">
-                        {course.studentsEnroled.length} students
+                        {course?.studentsEnrolled?.length} students
                       </p>
                       <p className="text-xs font-medium text-richblack-300">
                         |
                       </p>
                       <p className="text-xs font-medium text-richblack-300">
-                        Rs. {course.price}
+                        Rs. {course?.price}
                       </p>
                     </div>
                   </div>

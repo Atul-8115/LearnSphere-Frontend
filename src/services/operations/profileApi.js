@@ -5,7 +5,7 @@ import { setLoading } from "../../slices/authSlice";
 import { setUser } from "../../slices/profileSlice";
 import { logout } from "./authApi";
 
-const {GET_USER_DETAILS_API, GET_USER_ENROLLED_COURSES_API} = profileEndpoints
+const {GET_USER_DETAILS_API, GET_USER_ENROLLED_COURSES_API, GET_INSTRUCTOR_DATA_API} = profileEndpoints
 
 export function getUserDetails(refreshToken, navigate) {
     return async (dispatch) => {
@@ -57,6 +57,23 @@ export async function getUserEnrolledCourses(refreshToken) {
     } catch (error) {
         console.log("GET_USER_ENROLLED_COURSES_API API ERROR............", error)
         toast.error("Could Not Get Enrolled Courses")
+    }
+    toast.dismiss(toastId)
+    return result
+}
+
+export async function getInstructorData(refreshToken) {
+    const toastId = toast.loading("Loading...")
+    let result = []
+    try {
+        const response = await apiConnector("GET",GET_INSTRUCTOR_DATA_API,null, {
+            Authorization: `Bearer ${refreshToken}`
+        })
+        console.log("GET_INSTRUCTOR_DATA_API API RESPONSE............", response)
+        result = response?.data?.data
+    } catch (error) {
+        console.log("GET_INSTRUCTOR_DATA_API API ERROR............", error)
+        toast.error(error.message)
     }
     toast.dismiss(toastId)
     return result

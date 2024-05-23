@@ -22,6 +22,7 @@ const {
   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
   CREATE_RATING_API,
   LECTURE_COMPLETION_API,
+  COURSE_PROGRESS_PERCENTAGE_API
 } = courseEndpoints
 
 export const getAllCourses = async () => {
@@ -354,7 +355,7 @@ export const getFullDetailsOfCourse = async (courseId, refreshToken) => {
 
 // mark a lecture as complete
 export const markLectureAsComplete = async (data, refreshToken) => {
-  console.log("Priting refreshToken -> ",refreshToken)
+  // console.log("Priting refreshToken -> ",refreshToken)
   let result = null
   console.log("mark complete data", data)
   const toastId = toast.loading("Loading...")
@@ -403,4 +404,28 @@ export const createRating = async (data, refreshToken) => {
   }
   toast.dismiss(toastId)
   return success
+}
+
+export const getCourseProgressPercentage = async(data, refreshToken) => {
+  const toastId = toast.loading("Loading...")
+  console.log("Printing course Id -> ",data)
+  let result = null;
+  try {
+       const response = await apiConnector("POST", COURSE_PROGRESS_PERCENTAGE_API, data, {
+        Authorization: `Bearer ${refreshToken}`,
+       })
+
+       console.log("GET COURSE PROGRESS PERCENTAGE API RESPONSE............", response)
+
+       if(!response.data.success) {
+          throw new Error("Could Not Fetched CourseProgressPercentage.")
+       }
+       toast.success("Fetched courseProgressPercentage successfully.")
+       result = response?.data?.data
+  } catch (error) {
+    console.log("GET COURSE PROGRESS PERCENTAGE API RESPONSE............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId);
+  return result
 }
