@@ -1,4 +1,4 @@
-const BASE_URL = "https://learnsphere-backend.onrender.com/api/v1"
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL
 
 // AUTH ENDPOINTS
 export const authEndpoints = {
