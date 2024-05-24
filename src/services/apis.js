@@ -8,8 +8,7 @@ export const authEndpoints = {
   RESETPASSTOKEN_API: BASE_URL + "/auth/reset-password-token",
   RESETPASSWORD_API: BASE_URL + "/auth/reset-password",
 }
-// VITE_APP_BASE_URL = 'http://localhost:5173/'
-// VITE_APP_RAZORPAY_KEY= rzp_test_H0aC1lE93TK7TT
+
 // PROFILE ENDPOINTS
 export const profileEndpoints = {
   GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
